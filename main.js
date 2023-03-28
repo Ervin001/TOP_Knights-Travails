@@ -1,6 +1,7 @@
 class Game {
   board = [];
   boardLength = 8;
+
   #knight;
 
   constructor() {
@@ -35,7 +36,7 @@ class Game {
     return this.board;
   }
 
-  knightTraversal(startPoint, endPoint) {
+  knightTraversal([startX, startY], [endX, endY]) {
     if (
       startX < 0 ||
       startY < 0 ||
@@ -61,8 +62,7 @@ class Game {
       return `Please choose a valid position. Between (0,0) - (${
         this.boardLength - 1
       },${this.boardLength - 1})`;
-
-    return `(${startX},${startY}) is Valid`;
+    return;
     // this.#knight.moveUR();
     // this.#knight.moveRD();
     // this.#knight.moveRU();
@@ -76,6 +76,47 @@ class Game {
     // this.board[this.#knight.x][this.#knight.y].visited = true;
     // return this.board[this.#knight.x][this.#knight.y];
   }
+
+  adjecencyList(xCord, yCord, depth = 1, adList = {}) {
+    const moves = [
+      [-2, -1],
+      [-2, 1],
+      [-1, -2],
+      [-1, 2],
+      [1, -2],
+      [1, 2],
+      [2, -1],
+      [2, 1],
+    ];
+
+    const movesForSquare = [];
+
+    // check the current cell to visited
+    this.board[xCord][yCord].visited = false;
+
+    for (let i = 0; i < moves.length; i++) {
+      const move = moves[i];
+      const newX = xCord + move[0];
+      const newY = yCord + move[1];
+
+      if (
+        newX >= 0 &&
+        newX < this.boardLength &&
+        newY >= 0 &&
+        newY <= this.boardLength &&
+        !this.board[newX][newY].visited
+      ) {
+        // set every new cell to visited
+        this.board[newX][newY].visited = true;
+
+        movesForSquare.push([newX, newY]);
+        console.log(this.board[newX][newY]);
+      }
+    }
+
+    adList[(xCord, yCord)] = movesForSquare;
+    return movesForSquare;
+  }
 }
 
 class Knight {
@@ -87,67 +128,11 @@ class Knight {
     // this makes it so you don't have to pass parameters into the moves methods
     this.boardLength = boardLength;
   }
-
-  moveUL() {
-    // up 2 l 1
-    if (this.x - 1 < 0 || this.y + 2 > this.boardLength) return;
-    this.x -= 1;
-    this.y += 2;
-  }
-
-  moveUR() {
-    // up 2 r 1
-    if (this.x + 1 > this.boardLength || this.y + 2 > this.boardLength) return;
-    this.x += 1;
-    this.y += 2;
-  }
-
-  moveDL() {
-    // d 2 l 1
-    if (this.x - 1 < 0 || this.y - 2 < 0) return;
-    this.x -= 1;
-    this.y -= 2;
-  }
-
-  moveDR() {
-    // d 2 r 1
-    if (this.x + 1 > this.boardLength || this.y - 2 < 0) return;
-    this.x += 1;
-    this.y -= 2;
-  }
-
-  moveLU() {
-    // l 2 up 1
-    if (this.x - 2 < 0 || this.y + 1 < this.boardLength) return;
-    this.x -= 2;
-    this.y += 1;
-  }
-
-  moveLD() {
-    // l 2 d 1
-    if (this.x - 2 < 0 || this.y + 1 > this.boardLength) return;
-    this.x -= 2;
-    this.y -= 1;
-  }
-
-  moveRU() {
-    // r 2 up 1
-    if (this.x + 2 > this.boardLength || this.y + 2 > this.boardLength) return;
-    this.x += 2;
-    this.y += 1;
-  }
-
-  moveRD() {
-    // r 2 d 1
-    if (this.x < 0 || this.y < 0) return;
-    this.x += 2;
-    this.y -= 1;
-  }
 }
 
 const game = new Game();
 
 const temptArr = [0, 1, 2, 3, 4, 5].length;
 
-console.log(game.test([7, 7], [0, 0]));
 // console.log(game.board);
+console.log(game.adjecencyList(4, 4));

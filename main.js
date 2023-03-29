@@ -63,21 +63,9 @@ class Game {
         this.boardLength - 1
       },${this.boardLength - 1})`;
     return;
-    // this.#knight.moveUR();
-    // this.#knight.moveRD();
-    // this.#knight.moveRU();
-    // this.#knight.moveUL();
-    // this.#knight.moveUL();
-    // this.#knight.moveLD();
-    // this.#knight.moveRD();
-    // this.#knight.moveLD();
-    // this.#knight.moveDL();
-
-    // this.board[this.#knight.x][this.#knight.y].visited = true;
-    // return this.board[this.#knight.x][this.#knight.y];
   }
 
-  adjecencyList(xCord, yCord, depth = 1, adList = {}) {
+  adjecencyList(xCoord, yCoord) {
     const moves = [
       [-2, -1],
       [-2, 1],
@@ -91,30 +79,28 @@ class Game {
 
     const movesForSquare = [];
 
-    // check the current cell to visited
-    this.board[xCord][yCord].visited = false;
-
     for (let i = 0; i < moves.length; i++) {
       const move = moves[i];
-      const newX = xCord + move[0];
-      const newY = yCord + move[1];
+      const newX = xCoord + move[0];
+      const newY = yCoord + move[1];
 
       if (
         newX >= 0 &&
-        newX < this.boardLength &&
+        newX <= this.boardLength - 1 &&
         newY >= 0 &&
-        newY <= this.boardLength &&
+        newY <= this.boardLength - 1 &&
         !this.board[newX][newY].visited
       ) {
+        // check the current cell to visited
+        this.board[xCoord][yCoord].visited = true;
         // set every new cell to visited
         this.board[newX][newY].visited = true;
 
         movesForSquare.push([newX, newY]);
-        console.log(this.board[newX][newY]);
       }
     }
+    if (movesForSquare.length === 0) return 'Check input';
 
-    adList[(xCord, yCord)] = movesForSquare;
     return movesForSquare;
   }
 }
@@ -132,7 +118,7 @@ class Knight {
 
 const game = new Game();
 
-const temptArr = [0, 1, 2, 3, 4, 5].length;
-
 // console.log(game.board);
-console.log(game.adjecencyList(4, 4));
+console.log(game.adjecencyList(4, 5));
+console.log(game.adjecencyList(5, 7));
+console.log(game.adjecencyList(0, -5));

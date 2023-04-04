@@ -64,7 +64,13 @@ class Game {
       const newY = xCoord + move[1];
 
       //check if move is valid
-      if (){}
+      if (
+        newX >= 0 &&
+        newX < this.boardLength &&
+        newY >= 0 &&
+        newY < this.boardLength
+      ) {
+      }
     }
 
     return movesForSquare;

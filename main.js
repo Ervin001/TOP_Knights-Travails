@@ -58,6 +58,9 @@ class Game {
 
     const movesForSquare = [];
 
+    // Current pos set visited
+    this.board[xCoord][yCoord].visited = true;
+
     for (let i = 0; i < moves.length; i++) {
       const move = moves[i];
       const newX = xCoord + move[0];
@@ -68,8 +71,10 @@ class Game {
         newX >= 0 &&
         newX < this.boardLength &&
         newY >= 0 &&
-        newY < this.boardLength
+        newY < this.boardLength &&
+        !this.board[newX][newY].visited
       ) {
+        movesForSquare.push(newX, newY);
       }
     }
 

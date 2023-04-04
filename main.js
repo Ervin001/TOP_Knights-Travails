@@ -43,6 +43,7 @@ class Game {
       },${this.boardLength - 1})`;
   }
 
+  // Gets all the neighbors of a point
   adjecencyList(xCoord, yCoord) {
     const moves = [
       [-2, -1],
@@ -56,6 +57,14 @@ class Game {
     ];
 
     const movesForSquare = [];
+
+    for (let i = 0; i < moves.length; i++) {
+      const newX = xCoord + moves[i][0];
+      const newY = xCoord + moves[i][1];
+      movesForSquare.push(newX);
+    }
+
+    return movesForSquare;
   }
 }
 
@@ -65,4 +74,4 @@ const game = new Game();
 // console.log(game.adjecencyList(4, 5));
 // console.log(game.adjecencyList(5, 7));
 // console.log(game.adjecencyList(0, 5));
-game.adjecencyList(0, 5);
+console.log(game.adjecencyList(0, 5));

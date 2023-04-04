@@ -59,9 +59,12 @@ class Game {
     const movesForSquare = [];
 
     for (let i = 0; i < moves.length; i++) {
-      const newX = xCoord + moves[i][0];
-      const newY = xCoord + moves[i][1];
-      movesForSquare.push(newX);
+      const move = moves[i];
+      const newX = xCoord + move[0];
+      const newY = xCoord + move[1];
+
+      //check if move is valid
+      if (){}
     }
 
     return movesForSquare;
